@@ -1,19 +1,37 @@
-import { AbilityBuilder, Ability } from '@casl/ability'
 import express from 'express'
+import { defineRulesFor } from './abilities.js'
+import { ForbiddenError } from '@casl/ability'
 
 const app = express();
 
-
 app.use(express.json())
 
-const hasPermission = (req, res, next) => {
-   next()   
+class Resource {
+  constructor(id) {
+    this.id = id
+  }
 }
 
-app.post('/api/:resource', hasPermission, (req, res) => { 
-    res.send("Got Permission")
+const hasPermission = (action) => {
+  return (req, res, next) => {
+    const { user } = req.body
+    const ability = defineRulesFor(user);
+    const { resource: resourceId } = req.params
+    const resource = new Resource(resourceId)
+    ForbiddenError.from(ability).throwUnlessCan(action, resource);
+
+    next()
+  }
+}
+
+app.post('/api/view/:resource', hasPermission("view"), (req, res) => {
+  res.send("Got Permission")
+})
+
+app.post('/api/edit/:resource', hasPermission("edit"), (req, res) => {
+  res.send("Got Permission")
 })
 
 app.listen(8080, () => {
-    console.log('listening on port 8080')
+  console.log('listening on port 8080')
 })
