@@ -1,0 +1,16 @@
+{
+  "name": "casl",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "@casl/ability": "^5.4.3",
+    "express": "^4.17.2",
+    "expressjs": "^1.0.1",
+    "nodemon": "^2.0.15"
+  }
+}

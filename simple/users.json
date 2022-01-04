@@ -1,0 +1,17 @@
+[
+    {
+        "id": "1",
+        "name": "Mort",
+        "roles": ["reader"] 
+    },
+    {
+        "id": "2",
+        "name": "Elvis",
+        "roles": ["reader","writer"] 
+    },
+    {
+        "id": "3",
+        "name": "Einstein",
+        "roles": ["writer","admin"] 
+    }
+]

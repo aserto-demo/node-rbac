@@ -1,0 +1,5 @@
+{
+    "reader": ["resource1"],
+    "writer": ["resource2", "resource3"],
+    "admin":  ["resource2", "resource4"]
+}
