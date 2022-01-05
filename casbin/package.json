@@ -1,5 +1,5 @@
 {
-  "name": "cancan",
+  "name": "casbin",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -7,7 +7,7 @@
     "start": "nodemon index.js"
   },
   "dependencies": {
-    "cancan": "^3.1.0",
+    "casbin": "^5.11.5",
     "express": "^4.17.2",
     "nodemon": "^2.0.15"
   }

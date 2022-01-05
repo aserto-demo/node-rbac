@@ -13,7 +13,7 @@ class Resource {
 }
 
 const hasPermission = (action) => {
-  return (req, res, next) => {
+  return (req, _, next) => {
     const { user } = req.body
     const ability = defineRulesFor(user);
     const { resource: resourceId } = req.params

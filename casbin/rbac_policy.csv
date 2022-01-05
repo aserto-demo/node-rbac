@@ -1,0 +1,5 @@
+p, Mort, resource1, view
+p, Elvis, resource2, edit
+p, resource2_admin, resource2, view
+p, resource2_admin, resource2, edit
+g, Einstien, resource2_admin
