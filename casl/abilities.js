@@ -8,10 +8,10 @@ export function defineRulesFor(user) {
 
   switch (user.role) {
     case "editor":
-      can("edit", "Resource", { id: 'resource1' });
       can("view", "Resource", { id: 'resource1' });
-      can("edit", "Resource", { id: 'resource2' });
       can("view", "Resource", { id: 'resource2' });
+      can("edit", "Resource", { id: 'resource2' });
+      can("edit", "Resource", { id: 'resource1' });
       break;
     case "viewer":
       can("view", "Resource", { id: 'resource1' });

@@ -6,7 +6,7 @@ app.use(express.json())
 
 
 const hasPermission = (action) => {
-  return async (req, _, next) => {
+  return async (req, res, next) => {
     const e = await newEnforcer('./rbac_model.conf', './rbac_policy.csv');
     const { user } = req.body
     const { resource } = req.params
