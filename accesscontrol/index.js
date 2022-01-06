@@ -1,30 +1,41 @@
 //Express app
-
 const express = require('express');
 const AccessControl = require('accesscontrol');
 const app = express();
 const grantList = require('./grantlist');
 const ac = new AccessControl(grantList);
-
+const users = require('../users')
 app.use(express.json())
+
+const resolveUserRole = (user) => {
+  //Would query DB
+  const userWithRole = users.find(u => u.id === user.id)
+  return userWithRole.role
+}
 
 const hasPermission = (action) => {
   return (req, res, next) => {
     const { user } = req.body
     const { resource } = req.params
+    const role = resolveUserRole(user)
     switch (action) {
       case 'read':
-        if (!ac.can(user.role).readAny(resource).granted) {
-          res.stats(403).send('Forbidden')
+        if (!ac.can(role).readAny(resource).granted) {
+          res.status(403).send('Forbidden')
+        } else {
+          next()
         }
         break;
-      case 'update':
-        if (!ac.can(user.role).updateAny(resource).granted) {
-          res.stats(403).send('Forbidden')
+      case 'edit':
+        if (!ac.can(role).updateAny(resource).granted) {
+          res.status(403).send('Forbidden')
+        } else {
+          next()
         }
         break;
+      default:
+        res.status(403).send('Forbidden')
     }
-    next()
   }
 }
 
@@ -32,7 +43,7 @@ app.post('/api/view/:resource', hasPermission('read'), (req, res) => {
   res.send('Got Permission')
 })
 
-app.post('/api/edit/:resource', hasPermission('update'), (req, res) => {
+app.post('/api/edit/:resource', hasPermission('edit'), (req, res) => {
   res.send('Got Permission')
 })
 

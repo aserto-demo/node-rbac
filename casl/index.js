@@ -3,7 +3,6 @@ import { defineRulesFor } from './abilities.js'
 import { ForbiddenError } from '@casl/ability'
 
 const app = express();
-
 app.use(express.json())
 class Resource {
   constructor(id) {
@@ -22,7 +21,7 @@ const hasPermission = (action) => {
       next()
     }
     catch (error) {
-      res.status(403).send('Forbidden')
+      res.status(403).send('Forbidden').end()
     }
   }
 }

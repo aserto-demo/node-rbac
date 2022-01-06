@@ -1,31 +1,29 @@
 const express = require('express')
+const users = require('../users')
+const policy = require('./policy')
+
 const app = express();
-const { RBAC } = require('rbac');
 
 app.use(express.json())
 
-const policy = new RBAC({
-  roles: ['viewer', 'editor'],
-  permissions: {
-    resource1: ['view', 'edit'],
-    resource2: ['view', 'edit']
-  },
-  grants: {
-    viewer: ['view_resource1', 'view_resource2'],
-    editor: ['viewer', 'edit_resource1', 'edit_resource2'],
-  },
-});
+const resolveUserRole = (user) => {
+  //Would query DB
+  const userWithRole = users.find(u => u.id === user.id)
+  return userWithRole.role
+}
 
 const hasPermission = (action) => {
   return async (req, res, next) => {
     const { user } = req.body
     const { resource } = req.params
-
-    const can = await policy.can(user.role, action, resource);
+    const role = resolveUserRole(user)
+    const can = await policy.can(role, action, resource);
     if (!can) {
-      res.status(403).end()
+      res.status(403).send('Forbidden').end()
     }
-    next()
+    else {
+      next()
+    }
   }
 }
 

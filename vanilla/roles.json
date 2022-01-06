@@ -1,0 +1,7 @@
+{
+  "viewer": { "view": ["resource1", "resource2"] },
+  "editor": {
+    "edit": ["resource1", "resource2"],
+    "view": ["resource1", "resource2"]
+  }
+}
