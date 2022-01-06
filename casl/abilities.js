@@ -7,10 +7,10 @@ const users = JSON.parse(
   )
 );
 
-const resolveUserRole = (user) => {
+const resolveUserRoles = (user) => {
   //Would query DB
   const userWithRole = users.find(u => u.id === user.id)
-  return userWithRole.role
+  return userWithRole.roles
 }
 
 export function defineRulesFor(user) {
@@ -18,24 +18,34 @@ export function defineRulesFor(user) {
 
   // If no user, no rules
   if (!user) return new Ability(rules);
-  const role = resolveUserRole(user)
+  const roles = resolveUserRoles(user)
 
-  switch (role) {
-    case "editor":
-      can("view", "Resource", { id: 'resource1' });
-      can("view", "Resource", { id: 'resource2' });
-      can("edit", "Resource", { id: 'resource2' });
-      can("edit", "Resource", { id: 'resource1' });
-      break;
-    case "viewer":
-      can("view", "Resource", { id: 'resource1' });
-      can("view", "Resource", { id: 'resource2' });
-      break;
-    default:
-      // anonymous users can't do anything
-      can();
-      break;
-  }
+  roles.forEach(role => {
+    switch (role) {
+      case "admin":
+        can("delete", "Resource", { id: 'resource1' });
+        can("delete", "Resource", { id: 'resource2' });
+        can("read", "Resource", { id: 'resource1' });
+        can("read", "Resource", { id: 'resource2' });
+        can("edit", "Resource", { id: 'resource2' });
+        can("edit", "Resource", { id: 'resource1' });
+        break;
+      case "editor":
+        can("read", "Resource", { id: 'resource1' });
+        can("read", "Resource", { id: 'resource2' });
+        can("edit", "Resource", { id: 'resource2' });
+        can("edit", "Resource", { id: 'resource1' });
+        break;
+      case "viewer":
+        can("read", "Resource", { id: 'resource1' });
+        can("read", "Resource", { id: 'resource2' });
+        break;
+      default:
+        // anonymous users can't do anything
+        can();
+        break;
+    }
+  });
 
   return new Ability(rules);
 }

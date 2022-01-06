@@ -1,7 +1,14 @@
 {
-  "viewer": { "view": ["resource1", "resource2"] },
+  "viewer": {
+    "read": ["resource1", "resource2"]
+  },
   "editor": {
+    "read": ["resource1", "resource2"],
+    "edit": ["resource1", "resource2"]
+  },
+  "admin": {
+    "read": ["resource1", "resource2", "resource3"],
     "edit": ["resource1", "resource2"],
-    "view": ["resource1", "resource2"]
+    "delete": ["resource1", "resource2"]
   }
 }

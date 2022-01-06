@@ -1,12 +1,14 @@
 [
   {
     "id": "1",
-    "name": "Mort",
-    "role": "viewer"
+    "roles": ["viewer"]
   },
   {
     "id": "2",
-    "name": "Elvis",
-    "role": "editor"
+    "roles": ["editor"]
+  },
+  {
+    "id": "3",
+    "roles": ["editor", "admin"]
   }
 ]

@@ -6,20 +6,26 @@ const app = express();
 
 app.use(express.json())
 
-const resolveUserRole = (user) => {
+const resolveUserRoles = (user) => {
   //Would query DB
   const userWithRole = users.find(u => u.id === user.id)
-  return userWithRole.role
+  return userWithRole.roles
 }
 
 const hasPermission = (action) => {
   return (req, res, next) => {
     const { user } = req.body
-    const role = resolveUserRole(user)
+    const userRoles = resolveUserRoles(user)
     const { resource } = req.params
-    const hasPermission = roles[role] && roles[role][action] && roles[role][action].includes(resource) ? true : false
 
-    if (hasPermission) {
+    const permissions = userRoles.reduce((perms, role) => {
+      perms = roles[role] && roles[role][action] ? perms.concat(roles[role][action]) : perms.concat([])
+      return perms
+    }, [])
+
+    const allowed = permissions.includes(resource)
+
+    if (allowed) {
       next()
     }
     else {
@@ -28,11 +34,15 @@ const hasPermission = (action) => {
   }
 }
 
-app.post('/api/view/:resource', hasPermission('view'), (req, res) => {
+app.post('/api/read/:resource', hasPermission('read'), (req, res) => {
   res.send("Got Permission")
 })
 
 app.post('/api/edit/:resource', hasPermission('edit'), (req, res) => {
+  res.send("Got Permission")
+})
+
+app.post('/api/delete/:resource', hasPermission('delete'), (req, res) => {
   res.send("Got Permission")
 })
 

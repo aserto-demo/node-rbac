@@ -26,12 +26,17 @@ const hasPermission = (action) => {
   }
 }
 
-app.post('/api/view/:resource', hasPermission('view'), (req, res) => {
-  res.send('Got Permission')
+
+app.post('/api/read/:resource', hasPermission('read'), (req, res) => {
+  res.send("Got Permission")
 })
 
 app.post('/api/edit/:resource', hasPermission('edit'), (req, res) => {
-  res.send('Got Permission')
+  res.send("Got Permission")
+})
+
+app.post('/api/delete/:resource', hasPermission('delete'), (req, res) => {
+  res.send("Got Permission")
 })
 
 app.listen(8080, () => {
