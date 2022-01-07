@@ -1,22 +1,16 @@
 //Express app
 const express = require('express');
-const users = require('../users')
+const { resolveUserRoles } = require('../utils')
 const roles = require('./roles')
 const app = express();
 
 app.use(express.json())
 
-const resolveUserRoles = (user) => {
-  //Would query DB
-  const userWithRole = users.find(u => u.id === user.id)
-  return userWithRole.roles
-}
-
 const hasPermission = (action) => {
   return (req, res, next) => {
     const { user } = req.body
-    const userRoles = resolveUserRoles(user)
     const { resource } = req.params
+    const userRoles = resolveUserRoles(user)
 
     const permissions = userRoles.reduce((perms, role) => {
       perms = roles[role] && roles[role][action] ? perms.concat(roles[role][action]) : perms.concat([])
@@ -25,12 +19,7 @@ const hasPermission = (action) => {
 
     const allowed = permissions.includes(resource)
 
-    if (allowed) {
-      next()
-    }
-    else {
-      res.status(403).send('Forbidden')
-    }
+    allowed ? next() : res.status(403).send('Forbidden').end()
   }
 }
 

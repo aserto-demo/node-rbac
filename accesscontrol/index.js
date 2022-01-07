@@ -1,17 +1,13 @@
 //Express app
 const express = require('express');
 const AccessControl = require('accesscontrol');
-const app = express();
+const { resolveUserRoles } = require('../utils')
 const grantList = require('./grantlist');
-const ac = new AccessControl(grantList);
-const users = require('../users')
-app.use(express.json())
 
-const resolveUserRoles = (user) => {
-  //Would query DB
-  const userWithRole = users.find(u => u.id === user.id)
-  return userWithRole.roles
-}
+const ac = new AccessControl(grantList);
+
+const app = express();
+app.use(express.json())
 
 const hasPermission = (action) => {
   return (req, res, next) => {
@@ -19,6 +15,7 @@ const hasPermission = (action) => {
     const { resource } = req.params
     const userRoles = resolveUserRoles(user)
     const allowed = userRoles.reduce((perms, role) => {
+      if (perms) return true
       switch (action) {
         case 'read':
           if (ac.can(role).readAny(resource).granted) {

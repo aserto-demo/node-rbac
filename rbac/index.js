@@ -1,16 +1,10 @@
 const express = require('express')
-const users = require('../users')
+const { resolveUserRoles } = require('../utils')
 const policy = require('./policy')
 
 const app = express();
 
 app.use(express.json())
-
-const resolveUserRoles = (user) => {
-  //Would query DB
-  const userWithRole = users.find(u => u.id === user.id)
-  return userWithRole.roles
-}
 
 const hasPermission = (action) => {
   return async (req, res, next) => {
@@ -20,17 +14,13 @@ const hasPermission = (action) => {
 
     const allowed = await userRoles.reduce(async (perms, role) => {
       const acc = await perms
-      const can = await policy.can(role, action, resource)
-      const result = can ? acc.concat(can) : acc.concat([])
-      return result
-    }, Promise.resolve([]))
+      if (acc) return true
 
-    if (!allowed.length > 0) {
-      res.status(403).send('Forbidden').end()
-    }
-    else {
-      next()
-    }
+      const can = await policy.can(role, action, resource)
+      if (can) return true
+    }, false)
+
+    allowed ? next() : res.status(403).send('Forbidden').end()
   }
 }
 

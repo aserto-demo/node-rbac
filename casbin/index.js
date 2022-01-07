@@ -1,36 +1,26 @@
 const { newEnforcer } = require('casbin');
 const express = require('express');
-const users = require('../users')
+const { resolveUserRoles } = require('../utils')
 const app = express();
 
 app.use(express.json())
 
-const resolveUserRoles = (user) => {
-  //Would query DB
-  const userWithRole = users.find(u => u.id === user.id)
-  return userWithRole.roles
-}
-
 const hasPermission = (action) => {
   return async (req, res, next) => {
-    const e = await newEnforcer('./rbac_model.conf', './rbac_policy.csv');
     const { user } = req.body
     const { resource } = req.params
     const userRoles = resolveUserRoles(user)
 
+    const e = await newEnforcer('./rbac_model.conf', './rbac_policy.csv');
+
     const allowed = await userRoles.reduce(async (perms, role) => {
       const acc = await perms
+      if (acc) return true
       const can = await e.enforce(role, resource, action)
-      const result = can ? acc.concat(can) : acc.concat([])
-      return result
-    }, Promise.resolve([]))
+      if (can) return true
+    }, false)
 
-    if (!allowed.length > 0) {
-      res.status(403).send('Forbidden').end()
-    }
-    else {
-      next()
-    }
+    allowed ? next() : res.status(403).send('Forbidden').end()
   }
 }
 
