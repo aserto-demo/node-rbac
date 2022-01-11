@@ -10,15 +10,15 @@ export function defineRulesFor(user) {
 
   roles.forEach(role => {
     switch (role) {
-      case 'viewer':
-        can('read', 'Resource', { id: 'resource1' });
-        can('read', 'Resource', { id: 'resource2' });
+      case 'user':
+        can('read', 'Asset', { id: 'asset1' });
+        can('read', 'Asset', { id: 'asset2' });
         break;
       case 'editor':
-        can('read', 'Resource', { id: 'resource1' });
-        can('read', 'Resource', { id: 'resource2' });
-        can('edit', 'Resource', { id: 'resource2' });
-        can('edit', 'Resource', { id: 'resource1' });
+        can('read', 'Asset', { id: 'asset1' });
+        can('read', 'Asset', { id: 'asset2' });
+        can('edit', 'Asset', { id: 'asset2' });
+        can('edit', 'Asset', { id: 'asset1' });
         break;
       case 'admin':
         can('manage', 'all')

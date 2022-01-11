@@ -4,7 +4,7 @@ import { ForbiddenError } from '@casl/ability'
 
 const app = express();
 app.use(express.json())
-class Resource {
+class Asset {
   constructor(id) {
     this.id = id
   }
@@ -13,11 +13,11 @@ class Resource {
 const hasPermission = (action) => {
   return (req, res, next) => {
     const { user } = req.body
-    const { resource: resourceId } = req.params
+    const { asset: assetId } = req.params
     const ability = defineRulesFor(user);
-    const resource = new Resource(resourceId)
+    const asset = new Asset(assetId)
     try {
-      ForbiddenError.from(ability).throwUnlessCan(action, resource);
+      ForbiddenError.from(ability).throwUnlessCan(action, asset);
       next()
     }
     catch (error) {
@@ -27,15 +27,15 @@ const hasPermission = (action) => {
 }
 
 
-app.post('/api/read/:resource', hasPermission('read'), (req, res) => {
+app.post('/api/read/:asset', hasPermission('read'), (req, res) => {
   res.send("Got Permission")
 })
 
-app.post('/api/edit/:resource', hasPermission('edit'), (req, res) => {
+app.post('/api/edit/:asset', hasPermission('edit'), (req, res) => {
   res.send("Got Permission")
 })
 
-app.post('/api/delete/:resource', hasPermission('delete'), (req, res) => {
+app.post('/api/delete/:asset', hasPermission('delete'), (req, res) => {
   res.send("Got Permission")
 })
 

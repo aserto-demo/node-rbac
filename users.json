@@ -1,14 +1,14 @@
 [
   {
-    "id": "1",
-    "roles": ["viewer"]
+    "id": "karinl@acmecorp.com",
+    "roles": ["user"]
   },
   {
-    "id": "2",
+    "id": "dianet@acmecorp.com",
     "roles": ["editor"]
   },
   {
-    "id": "3",
-    "roles": ["editor", "admin"]
+    "id": "krisj@acmecorp.com",
+    "roles": ["user", "admin"]
   }
 ]
