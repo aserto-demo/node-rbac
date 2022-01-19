@@ -9,7 +9,6 @@ app.use(express.json())
 const hasPermission = (action) => {
   return (req, res, next) => {
     const { user } = req.body
-    console.log(req)
     const { asset } = req.params
     const userRoles = resolveUserRoles(user)
 
