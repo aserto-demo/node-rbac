@@ -1,12 +1,12 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const cors = require('cors');
-const { is } = require('express-jwt-aserto');
-require('dotenv').config()
+const cors = require("cors");
+const { is } = require("express-jwt-aserto");
+require("dotenv").config();
 
 // Enable CORS
 app.use(cors());
-app.use(express.json())
+app.use(express.json());
 
 //Aserto authorizer configuration
 const options = {
@@ -20,26 +20,26 @@ const options = {
 
 const hasPermission = (action) => {
   return async (req, res, next) => {
-    const { user } = req.body
-    const { asset } = req.params
-    req.user = { sub: user.id }
-    const allowed = await is('allowed', req, options, false, { asset })
-    allowed ? next() : res.status(403).send('Forbidden').end()
-  }
-}
+    const { user } = req.body;
+    const { asset } = req.params;
+    req.user = { sub: user.id };
+    const allowed = await is("allowed", req, options, false, { asset });
+    allowed ? next() : res.status(403).send("Forbidden").end();
+  };
+};
 
 //Aserto authorizer middleware function
-app.get('/api/:asset', hasPermission('read'), (req, res) => {
-  res.send("Got Permission")
-})
+app.get("/api/:asset", hasPermission("read"), (req, res) => {
+  res.send("Got Permission");
+});
 
-app.put('/api/:asset', hasPermission('edit'), (req, res) => {
-  res.send("Got Permission")
-})
+app.put("/api/:asset", hasPermission("edit"), (req, res) => {
+  res.send("Got Permission");
+});
 
-app.delete('/api/:asset', hasPermission('delete'), (req, res) => {
-  res.send("Got Permission")
-})
+app.delete("/api/:asset", hasPermission("delete"), (req, res) => {
+  res.send("Got Permission");
+});
 
 // Launch the API Server at localhost:8080
 app.listen(8080);
