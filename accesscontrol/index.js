@@ -68,16 +68,16 @@ const hasPermission = (action) => {
   }
 }
 
-app.post('/api/read/:asset', hasPermission('read'), (req, res) => {
-  res.json(res.locals)
+app.get('/api/:asset', hasPermission('read'), (req, res) => {
+  res.send("Got Permission")
 })
 
-app.post('/api/edit/:asset', hasPermission('edit'), (req, res) => {
-  res.json(res.locals)
+app.put('/api/:asset', hasPermission('edit'), (req, res) => {
+  res.send("Got Permission")
 })
 
-app.post('/api/delete/:asset', hasPermission('delete'), (req, res) => {
-  res.json(res.locals)
+app.delete('/api/:asset', hasPermission('delete'), (req, res) => {
+  res.send("Got Permission")
 })
 
 app.listen(8080, () => {

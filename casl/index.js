@@ -27,15 +27,15 @@ const hasPermission = (action) => {
 }
 
 
-app.post('/api/read/:asset', hasPermission('read'), (req, res) => {
+app.get('/api/:asset', hasPermission('read'), (req, res) => {
   res.send("Got Permission")
 })
 
-app.post('/api/edit/:asset', hasPermission('edit'), (req, res) => {
+app.put('/api/:asset', hasPermission('edit'), (req, res) => {
   res.send("Got Permission")
 })
 
-app.post('/api/delete/:asset', hasPermission('delete'), (req, res) => {
+app.delete('/api/:asset', hasPermission('delete'), (req, res) => {
   res.send("Got Permission")
 })
 
