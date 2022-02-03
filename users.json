@@ -1,14 +1,14 @@
 [
   {
-    "id": "karinl@acmecorp.com",
-    "roles": ["user"]
+    "id": "beth@the-smiths.com",
+    "roles": ["clone"]
   },
   {
-    "id": "dianet@acmecorp.com",
-    "roles": ["editor"]
+    "id": "morty@the-citadel.com",
+    "roles": ["sidekick"]
   },
   {
-    "id": "krisj@acmecorp.com",
-    "roles": ["user", "admin"]
+    "id": "rick@the-citadel.com",
+    "roles": ["evilGenius", "squanch"]
   }
 ]

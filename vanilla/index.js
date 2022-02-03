@@ -26,15 +26,15 @@ const hasPermission = (action) => {
   };
 };
 
-app.get("/api/:asset", hasPermission("read"), (req, res) => {
+app.get("/api/:asset", hasPermission("gather"), (req, res) => {
   res.send("Got Permission");
 });
 
-app.put("/api/:asset", hasPermission("edit"), (req, res) => {
+app.put("/api/:asset", hasPermission("consume"), (req, res) => {
   res.send("Got Permission");
 });
 
-app.delete("/api/:asset", hasPermission("delete"), (req, res) => {
+app.delete("/api/:asset", hasPermission("destroy"), (req, res) => {
   res.send("Got Permission");
 });
 

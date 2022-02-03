@@ -1,14 +1,14 @@
 {
-  "user": {
-    "read": ["asset1", "asset2"]
+  "clone": {
+    "gather": ["megaSeeds", "timeCrystals"]
   },
-  "editor": {
-    "read": ["asset1", "asset2"],
-    "edit": ["asset1", "asset2"]
+  "sidekick": {
+    "gather": ["megaSeeds", "timeCrystals"],
+    "consume": ["megaSeeds", "timeCrystals"]
   },
-  "admin": {
-    "read": ["asset1", "asset2", "asset3"],
-    "edit": ["asset1", "asset2"],
-    "delete": ["asset1", "asset2"]
+  "evilGenius": {
+    "gather": ["megaSeeds", "timeCrystals"],
+    "consume": ["megaSeeds", "timeCrystals"],
+    "destroy": ["megaSeeds", "timeCrystals"]
   }
 }

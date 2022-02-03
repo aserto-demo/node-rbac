@@ -1,8 +1,8 @@
-p, user, asset1, view
-p, user, asset2, view
-p, editor, asset1, edit
-p, editor, asset2, edit
-p, admin, asset1, delete
-p, admin, asset2, delete
-g, editor, user
-g, admin, editor
+p, clone, megaSeeds, gather
+p, clone, timeCrystals, gather
+p, sidekick, megaSeeds, consume
+p, sidekick, timeCrystals, consume
+p, evilGenius, megaSeeds, destroy
+p, evilGenius, timeCrystals, destroy
+g, sidekick, clone
+g, evilGenius, sidekick

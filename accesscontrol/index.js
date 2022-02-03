@@ -5,19 +5,19 @@ const { resolveUserRoles } = require("../utils");
 const grantList = require("./grantlist");
 
 const ac = new AccessControl(grantList);
-ac.grant("admin").extend("editor");
+ac.grant("evilGenius").extend("sidekick");
 
 const app = express();
 app.use(express.json());
 
 const assets = {
-  asset1: {
-    id: "asset1",
-    content: "This is asset 1"
+  megaSeeds: {
+    id: "megaSeeds",
+    content: "Mega Seeds grow on Mega Trees"
   },
-  asset2: {
-    id: "asset2",
-    content: "This is asset 2"
+  timeCrystals: {
+    id: "timeCrystals",
+    content: "Time Crystals let you see the future"
   }
 };
 
@@ -29,19 +29,19 @@ const hasPermission = (action) => {
     const allowed = userRoles.reduce((perms, role) => {
       let permissions;
       switch (action) {
-        case "read":
+        case "gather":
           permissions = ac.can(role).readAny(asset);
           if (permissions.granted) {
             perms = perms.concat(permissions);
           }
           break;
-        case "edit":
+        case "consume":
           permissions = ac.can(role).updateAny(asset);
           if (permissions.granted) {
             perms = perms.concat(permissions);
           }
           break;
-        case "delete":
+        case "destroy":
           permissions = ac.can(role).deleteAny(asset);
           if (permissions.granted) {
             perms = perms.concat(permissions);
@@ -68,15 +68,15 @@ const hasPermission = (action) => {
   };
 };
 
-app.get("/api/:asset", hasPermission("read"), (req, res) => {
+app.get("/api/:asset", hasPermission("gather"), (req, res) => {
   res.send("Got Permission");
 });
 
-app.put("/api/:asset", hasPermission("edit"), (req, res) => {
+app.put("/api/:asset", hasPermission("consume"), (req, res) => {
   res.send("Got Permission");
 });
 
-app.delete("/api/:asset", hasPermission("delete"), (req, res) => {
+app.delete("/api/:asset", hasPermission("destroy"), (req, res) => {
   res.send("Got Permission");
 });
 

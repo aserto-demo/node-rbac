@@ -1,14 +1,14 @@
 const { RBAC } = require('rbac');
 const policy = new RBAC({
-    roles: ['user', 'editor', 'admin'],
+    roles: ['clone', 'sidekick', 'evilGenius'],
     permissions: {
-        asset1: ['read', 'edit', 'delete'],
-        asset2: ['read', 'edit', 'delete']
+        megaSeeds: ['gather', 'consume', 'destroy'],
+        timeCrystals: ['gather', 'consume', 'destroy']
     },
     grants: {
-        user: ['read_asset1', 'read_asset2'],
-        editor: ['user', 'edit_asset1', 'edit_asset2'],
-        admin: ['editor', 'delete_asset1', 'delete_asset2'],
+        clone: ['gather_megaSeeds', 'gather_timeCrystals'],
+        sidekick: ['clone', 'consume_megaSeeds', 'consume_timeCrystals'],
+        evilGenius: ['sidekick', 'destroy_megaSeeds', 'destroy_timeCrystals'],
     },
 });
 

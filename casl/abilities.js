@@ -10,17 +10,17 @@ export function defineRulesFor(user) {
 
   roles.forEach(role => {
     switch (role) {
-      case 'user':
-        can('read', 'Asset', { id: 'asset1' });
-        can('read', 'Asset', { id: 'asset2' });
+      case 'clone':
+        can('gather', 'Asset', { id: 'megaSeeds' });
+        can('gather', 'Asset', { id: 'timeCrystals' });
         break;
-      case 'editor':
-        can('read', 'Asset', { id: 'asset1' });
-        can('read', 'Asset', { id: 'asset2' });
-        can('edit', 'Asset', { id: 'asset2' });
-        can('edit', 'Asset', { id: 'asset1' });
+      case 'sidekick':
+        can('gather', 'Asset', { id: 'megaSeeds' });
+        can('gather', 'Asset', { id: 'timeCrystals' });
+        can('consume', 'Asset', { id: 'timeCrystals' });
+        can('consume', 'Asset', { id: 'megaSeeds' });
         break;
-      case 'admin':
+      case 'evilGenius':
         can('manage', 'all')
         break;
       default:
