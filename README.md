@@ -1,5 +1,5 @@
 # Node RBAC Examples
-This repository contains a number of Node.JS applications, each demonstrates a different approach to implementing Resource-Based Authorization (RBAC) for a simple HTTP API.
+This repository contains a number of Node.js applications, each demonstrates a different approach to implementing Resource-Based Authorization (RBAC) for a simple HTTP API.
 
 ## Running the Examples
 To run an example, cd to its directory and run: 
